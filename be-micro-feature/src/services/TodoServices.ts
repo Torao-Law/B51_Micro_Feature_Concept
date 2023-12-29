@@ -11,9 +11,19 @@ export default new  class TodoService {
         .createQueryBuilder("todos")
         .getMany()
 
+      return todos
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async create(reqBody: object) : Promise<object> {
+    try {
+      const todo = await this.TodoRepository.save(reqBody)
+
       return {
         message: "success",
-        data: todos
+        data: todo
       }
     } catch (error) {
       throw error

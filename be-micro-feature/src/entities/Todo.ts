@@ -10,4 +10,7 @@ export class Todo {
 
   @Column()
   description: string
+
+  @Column({ nullable: true })
+  image: string
 }
