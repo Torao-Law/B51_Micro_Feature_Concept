@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm"
+import { User } from "./User"
 
 @Entity({ name: "todos" })
 export class Todo {
@@ -13,4 +14,9 @@ export class Todo {
 
   @Column({ nullable: true })
   image: string
+
+  @ManyToOne(() => User, (user) => user.todos, {
+    onDelete: "CASCADE"
+  })
+  user: User
 }

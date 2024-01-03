@@ -21,11 +21,14 @@ export default new class TodoControllers {
 
   async create(req: Request, res: Response) {
     try {
+      const loginSession = res.locals.loginSession
       const data = {
         title: req.body.title,
         description: req.body.description,
         image: res.locals.filename
       }
+
+      console.log(loginSession.obj)
 
       const { error, value } = createTodoSchema.validate(data)
       if(error) return res.status(400).json(error.details[0].message)
@@ -36,7 +39,10 @@ export default new class TodoControllers {
       const obj = {
         title: value.title,
         description: value.description,
-        image: cloudinaryRes.secure_url
+        image: cloudinaryRes.secure_url,
+        user: {
+          id: loginSession.obj.id
+        }
       }
 
       const response = await TodoServices.create(obj)

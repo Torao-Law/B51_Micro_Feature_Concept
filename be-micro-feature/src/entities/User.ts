@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm"
+import { Todo } from "./Todo"
 
-@Entity()
+@Entity({ name: "users" })
 export class User {
 
     @PrimaryGeneratedColumn()
@@ -15,4 +16,8 @@ export class User {
     @Column()
     password: string
 
+    @OneToMany(() => Todo, (todo) => todo.user, {
+        onDelete: "CASCADE"
+    })
+    todos: Todo[]
 }
